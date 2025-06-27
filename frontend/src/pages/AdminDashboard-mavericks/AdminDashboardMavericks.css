@@ -1,0 +1,77 @@
+.mavericks-container {
+  padding: 20px 40px;
+}
+
+.mavericks-title {
+  font-size: 1.6rem;
+  color: #1e293b;
+  margin-bottom: 30px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.maverick-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease;
+  border-left: 6px solid #3b82f6;
+}
+
+.maverick-card:hover {
+    transform: scale(1.05, 1.05);
+}
+
+.maverick-card h3 {
+  margin-top: 0;
+  color: #1e3a8a;
+}
+
+.maverick-card p {
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.maverick-card button {
+  margin-top: 16px;
+  padding: 10px 16px;
+  background-color: #3b82f6;
+  border: none;
+  color: white;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.maverick-card button:hover {
+  background-color: #2563eb;
+}
+
+.future-features {
+  margin-top: 40px;
+  padding: 20px;
+  background: #f8fafc;
+  border-left: 4px solid #94a3b8;
+  border-radius: 8px;
+}
+
+.future-features h4 {
+  margin-top: 0;
+  color: #334155;
+}
+
+.future-features ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.future-features li {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}

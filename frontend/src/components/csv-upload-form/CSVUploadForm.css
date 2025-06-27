@@ -1,0 +1,77 @@
+.csv-upload h3 {
+  color: #1e3a8a;
+  margin-bottom: 16px;
+}
+
+.drop-zone {
+  border: 2px dashed #94a3b8;
+  padding: 30px;
+  text-align: center;
+  color: #64748b;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  background-color: #f9fafb;
+  position: relative;
+}
+
+.browse-btn {
+  color: #3b82f6;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.file-info, .error-msg {
+  margin: 10px 0;
+  color: #475569;
+}
+.error-msg {
+  color: #ef4444;
+}
+
+.upload-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.upload-btn:hover {
+  background-color: #2563eb;
+}
+.upload-btn:disabled {
+  background-color: #a5b4fc;
+  cursor: not-allowed;
+}
+
+.preview-table {
+  margin-top: 20px;
+  overflow-x: auto;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.preview-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.preview-table th,
+.preview-table td {
+  padding: 10px;
+  font-size: 0.9rem;
+  border: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.preview-table th {
+  background-color: #f1f5f9;
+}
+
+.preview-count {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 6px;
+}

@@ -1,0 +1,49 @@
+.section-container {
+  padding: 20px 40px;
+}
+
+.section-title {
+  font-size: 1.6rem;
+  color: #1e293b;
+  margin-bottom: 30px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.section-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease;
+  border-left: 6px solid #3b82f6;
+}
+
+.section-card h3 {
+  margin-top: 0;
+  color: #1e3a8a;
+}
+
+.section-card p {
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.section-card button {
+  margin-top: 16px;
+  padding: 10px 16px;
+  background-color: #3b82f6;
+  border: none;
+  color: white;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.section-card button:hover {
+  background-color: #2563eb;
+}

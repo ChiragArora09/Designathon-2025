@@ -1,0 +1,85 @@
+.dashboard-home {
+  padding: 20px 40px;
+}
+
+.dashboard-title {
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  color: #1e293b;
+}
+
+.metric-cards {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.metric-card {
+  flex: 1 1 160px;
+  background: white;
+  border-left: 5px solid #3b82f6;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+}
+
+.metric-card h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+.metric-card p {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #1e3a8a;
+  margin-top: 8px;
+}
+
+.quick-actions h3,
+.activity-feed h3,
+.progress-snapshot h3,
+.alerts-section h3 {
+  margin-top: 40px;
+  color: #1e293b;
+}
+
+.actions-grid {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.actions-grid button {
+  padding: 10px 20px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.actions-grid button:hover {
+  background: #2563eb;
+}
+
+.activity-feed ul,
+.alerts-section ul {
+  padding-left: 20px;
+  margin-top: 10px;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.progress-placeholder {
+  margin-top: 10px;
+  background: #e2e8f0;
+  padding: 40px;
+  text-align: center;
+  color: #334155;
+  border-radius: 6px;
+}

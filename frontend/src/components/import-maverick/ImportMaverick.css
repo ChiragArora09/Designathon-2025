@@ -1,0 +1,51 @@
+.import-container {
+  display: flex;
+  height: 100%;
+  gap: 30px;
+  padding: 30px;
+  background-color: #f8fafc;
+}
+
+.import-page {
+  padding: 30px;
+  background-color: #f1f5f9;
+  min-height: 100vh;
+}
+
+.import-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.back-button {
+  background-color: #e2e8f0;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s ease-in-out;
+}
+
+.back-button:hover {
+  background-color: #cbd5e1;
+}
+
+.import-header h2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+.import-left,
+.import-right {
+  flex: 1;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
