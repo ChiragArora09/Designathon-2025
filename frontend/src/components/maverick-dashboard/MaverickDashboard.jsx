@@ -90,7 +90,7 @@ const MaverickDashboard = () => {
 
     console.log(res.data)
 
-    navigate("/activity", {
+    navigate("/maverick-dashboard/activity", {
       state: {
         activityId: res.data.activityId,
         questions: res.data.questions

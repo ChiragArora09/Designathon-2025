@@ -44,7 +44,7 @@ function App() {
       <Route path="/admin-dashboard/batch/assign-mavericks" element={<AdminRoute><AssignMavericks /></AdminRoute>}/>
 
       <Route path="/maverick-dashboard" element={<MaverickRoute><MaverickDashboard /></MaverickRoute>}/>
-      <Route path="/activity" element={<MaverickRoute><ActivityScreen /></MaverickRoute>}/>
+      <Route path="/maverick-dashboard/activity" element={<ActivityScreen />}/>
 
     </Routes>
   );
