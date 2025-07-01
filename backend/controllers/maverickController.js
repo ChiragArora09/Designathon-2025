@@ -119,7 +119,7 @@ exports.addMaverick = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-// id = select m.id from maverick_batch where batch_type="phase 1 - segue soft_skill"
+
 exports.getUnassignedMavericks = async (req, res) => {
   try {
     const { phaseType } = req.query;
@@ -128,7 +128,7 @@ exports.getUnassignedMavericks = async (req, res) => {
 
     if(phaseType=="Phase 1 - Softskills"){
       const [rows] = await db.query(`SELECT id, full_name, role, year FROM mavericks m WHERE id NOT IN (select maverick_id from maverick_batch)`);
-      res.json(rows)
+      return res.json(rows)
     }else if(phaseType=="Phase 1 - Technical"){
       previousPhase = "Phase 1 - Softskills"
     }else if(phaseType=="Phase 2 - Softskills"){
@@ -138,10 +138,153 @@ exports.getUnassignedMavericks = async (req, res) => {
     }
     console.log(previousPhase);
     const [rows] = await db.query(`
-      SELECT id, full_name, role, year FROM mavericks m WHERE id in (select maverick_id from maverick_batch where phase_type=? AND maverick_id NOT IN (select maverick_id from maverick_batch where phase_type=?))`,[previousPhase, phaseType]);
-      res.json(rows)
+      SELECT m.id, m.full_name, m.role, m.year
+      FROM mavericks m
+      WHERE m.id IN (
+        SELECT mb1.maverick_id 
+        FROM maverick_batch mb1 
+        WHERE mb1.phase_type = ?
+      )
+      AND m.id NOT IN (
+        SELECT mb2.maverick_id 
+        FROM maverick_batch mb2 
+        WHERE mb2.phase_type = ?
+      )
+    `, [previousPhase, phaseType]);
+      return res.json(rows)
   } catch (err) {
     console.error("❌ Failed to fetch unassigned mavericks:", err);
     res.status(500).json({ error: "Server error" });
   }
 }
+
+exports.getMaverickProfile = async (req, res) => {
+  const userId = req.session.userId;
+
+  const [rows] = await db.query(`
+    SELECT m.id, m.full_name, b.phase as phase_type, b.name as batch_name
+    FROM mavericks m 
+    JOIN maverick_batch mb ON mb.maverick_id = m.id 
+    JOIN batches b ON b.id = mb.batch_id 
+    WHERE m.user_id = ? 
+    ORDER BY mb.assigned_at DESC LIMIT 1
+  `, [userId]);
+
+  res.json(rows[0]);
+};
+
+exports.getTodayPlan = async (req, res) => {
+  const { id } = req.params;
+  console.log(id)
+  // This assumes you track day-wise progress:
+  const [todayRow] = await db.query(` 
+    SELECT *
+    FROM learning_path_topics
+    WHERE path_id = (
+      SELECT b.path_id 
+      FROM batches b
+      JOIN maverick_batch mb ON mb.batch_id = b.id
+      WHERE mb.maverick_id = 1
+    )
+    AND day = (
+      SELECT DATEDIFF(CURDATE(), mb.training_start_date) + 1
+      FROM maverick_batch mb
+      WHERE mb.maverick_id = 1
+    );
+  `, [id, id]);
+
+  if (!todayRow.length) return res.json({});
+
+  // Add activities
+  const [online] = await db.query(`SELECT * FROM online_activities WHERE topic_id = ?`, [todayRow[0].id]);
+  const [offline] = await db.query(`SELECT * FROM offline_activities WHERE topic_id = ?`, [todayRow[0].id]);
+
+  res.json({
+    ...todayRow[0],
+    online_activities: online,
+    offline_activities: offline
+  });
+}
+
+exports.getMaverickLearningPath = async (req, res) => {
+  try {
+    const maverickId = req.params.id;
+
+    // 1️⃣ Get the learning path ID for the maverick's batch
+    const [batchRow] = await db.query(
+      `SELECT b.path_id 
+       FROM batches b
+       JOIN maverick_batch mb ON mb.batch_id = b.id
+       WHERE mb.maverick_id = ?`,
+      [maverickId]
+    );
+
+    if (!batchRow[0]) {
+      return res.status(404).json({ error: "No batch assigned" });
+    }
+
+    const pathId = batchRow[0].path_id;
+
+    // 2️⃣ Get the day-wise topics
+    const [topics] = await db.query(
+      `SELECT id, day, topic_title, description 
+       FROM learning_path_topics
+       WHERE path_id = ?
+       ORDER BY day ASC`,
+      [pathId]
+    );
+
+    // 3️⃣ For each topic, get activities + completion status + score
+    const day_wise_plan = await Promise.all(
+      topics.map(async (topic) => {
+        // ✅ Online Activities with maverick status
+        const [online] = await db.query(
+          `
+            SELECT 
+              oa.id,
+              oa.type,
+              oa.title,
+              oa.details,
+              IFNULL(ma.completed, FALSE) AS completed,
+              ma.score
+            FROM online_activities oa
+            LEFT JOIN maverick_activities ma 
+              ON ma.activity_id = oa.id AND ma.activity_type = 'online' AND ma.maverick_id = ?
+            WHERE oa.topic_id = ?
+          `,
+          [maverickId, topic.id]
+        );
+
+        // ✅ Offline Activities with maverick status
+        const [offline] = await db.query(
+          `
+            SELECT 
+              oa.id,
+              oa.type,
+              oa.trainer_notes,
+              IFNULL(ma.completed, FALSE) AS completed,
+              ma.score
+            FROM offline_activities oa
+            LEFT JOIN maverick_activities ma 
+              ON ma.activity_id = oa.id AND ma.activity_type = 'offline' AND ma.maverick_id = ?
+            WHERE oa.topic_id = ?
+          `,
+          [maverickId, topic.id]
+        );
+
+        return {
+          day: topic.day,
+          topic_title: topic.topic_title,
+          description: topic.description,
+          online_activities: online,
+          offline_activities: offline,
+        };
+      })
+    );
+
+    res.json({ day_wise_plan });
+  } catch (err) {
+    console.error("❌ Error fetching learning path:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+};

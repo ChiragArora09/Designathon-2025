@@ -40,6 +40,8 @@ const loginUser = async (req, res) => {
       maxAge: 60 * 60 * 1000 // 1 hour
     });
 
+    req.session.userId = user.id;
+    
     res.status(200).json({ message: "Login successful", token, user: payload });
 
   } catch (err) {

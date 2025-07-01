@@ -95,6 +95,37 @@ const createTables = async () => {
       );
     `);
 
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS maverick_activities (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        maverick_id INT NOT NULL,
+        activity_id INT NOT NULL,
+        activity_type ENUM('quiz','assignment') NOT NULL,
+        activity_title VARCHAR(255),
+        completed BOOLEAN DEFAULT FALSE,   -- ✅ <---- THE FLAG
+        score FLOAT DEFAULT NULL,
+        submitted_at DATETIME DEFAULT NULL,
+        answers_json JSON DEFAULT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE KEY unique_activity (maverick_id, activity_id, activity_type),
+        FOREIGN KEY (maverick_id) REFERENCES mavericks(id) ON DELETE CASCADE,
+        FOREIGN KEY (activity_id) REFERENCES online_activities(id) ON DELETE CASCADE
+      );
+    `)
+
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS maverick_activity_answers (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        maverick_activity_id INT,
+        question TEXT,
+        correct_answer TEXT,
+        user_answer TEXT,
+        is_correct BOOLEAN,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (maverick_activity_id) REFERENCES maverick_activities(id)
+      );
+    `)
+
     console.log("✅ Tables created successfully!");
     process.exit(0);
   } catch (err) {

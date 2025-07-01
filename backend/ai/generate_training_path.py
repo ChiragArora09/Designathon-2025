@@ -1,7 +1,7 @@
 import sys
 import json5
 import json
-import openai  # Make sure `openai` is installed
+import openai
 
 client = openai.AzureOpenAI(
     api_version="2024-02-01",

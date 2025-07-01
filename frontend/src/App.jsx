@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import LoginPage from './components/loginpage/LoginPage'
 import AdminRoute from './routes/AdminRoute'
-import MaverickRoute from './routes/AdminRoute'
+import MaverickRoute from './routes/MaverickRoute'
 import AdminDashboard from './components/admin-dashboard/AdminDashboard'
 import MaverickDashboard from './components/maverick-dashboard/MaverickDashboard'
 import AdminDashboardHome from "./pages/AdminDashboard-home/AdminDashboardHome"
@@ -18,6 +18,7 @@ import CreateBatchWithLearningPath from './components/createBatch/CreateBatchWit
 import ImportMavericks from './components/import-maverick/ImportMaverick'
 import BatchList from './components/batchList/BatchList'
 import AssignMavericks from './components/assign-mavericks/AssignMavericks'
+import ActivityScreen from './pages/MavericksDashboard-activityScreen/ActivityScreen'
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
       <Route path="/admin-dashboard/batch/assign-mavericks" element={<AdminRoute><AssignMavericks /></AdminRoute>}/>
 
       <Route path="/maverick-dashboard" element={<MaverickRoute><MaverickDashboard /></MaverickRoute>}/>
+      <Route path="/activity" element={<MaverickRoute><ActivityScreen /></MaverickRoute>}/>
 
     </Routes>
   );

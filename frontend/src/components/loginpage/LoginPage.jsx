@@ -14,7 +14,7 @@ const LoginPage = () => {
 
     useEffect(() => {
     if (!loading && isLoggedIn) {
-        navigate(role === "Admin" ? "/admin-dashboard" : "/maverick-dashboard");
+        navigate(role === "Admin" ? "/admin-dashboard" : "/maverick-dashboard" ); // ns4o3s7nh@
     }
     }, [isLoggedIn, role, loading, navigate]);
 

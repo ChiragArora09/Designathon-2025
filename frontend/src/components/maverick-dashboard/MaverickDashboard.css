@@ -1,0 +1,155 @@
+.maverick-dashboard {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 2rem;
+  background: #f9fbfd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.dashboard-navbar {
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background:rgb(253, 253, 253);
+  padding: 1.5rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.header h2 {
+  margin: 0;
+}
+
+.progress-section {
+  margin-bottom: 40px;
+}
+
+.today-plan h3 {
+  margin-bottom: 1rem;
+}
+
+.plan-card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.plan-card h4 {
+  margin-top: 0;
+}
+
+.plan-card ul {
+  padding-left: 1.2rem;
+}
+
+.mark-done-btn {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mark-done-btn:hover {
+  background: #0056b3;
+}
+
+.learning-summary {
+  margin-top: 40px;
+  background: #eef5ff;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.learning-summary p {
+  margin: 5px 0;
+}
+
+
+.maverick-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.left-panel,
+.center-panel,
+.right-panel {
+  background: #f9f9ff;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-y: auto;
+  max-height: 85vh;
+}
+
+.left-panel h3,
+.right-panel h3 {
+  margin-bottom: 1rem;
+}
+
+.day-card {
+  border-left: 4px solid #ccc;
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.day-card.current-day {
+  border-color: #007bff;
+  background: #eef6ff;
+}
+
+.activities-list .activity-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.center-panel .header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logout-button {
+  background: #dc3545;
+  border: none;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.logout-button:hover {
+  background: #c82333;
+}
+
+.logout-icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #dc3545;
+  transition: color 0.2s ease;
+}
+
+.logout-icon:hover {
+  color: #b02a37;
+}
+
+.completed-icon {
+    margin-right: 10px;
+}

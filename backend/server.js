@@ -4,16 +4,29 @@ const path = require('path');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const cookieParser = require("cookie-parser");
+const session = require('express-session');
 
 // ROUTES
 const maverickRoutes = require('./routes/maverickRoutes');
 const batchRoutes = require('./routes/batchRoutes');
 const authRoutes = require('./routes/authRoutes');
+const quizRoutes = require('./routes/quizRoutes');
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'super-secret-key',  // ✅ MUST be set
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: false, // true if HTTPS
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
+  }
+}));
 
 // Middlewares
 app.use(cors({
@@ -44,9 +57,10 @@ const upload = multer({
 app.post('/upload-students', upload.single('file'), maverickRoutes);
 
 // API Routes
-app.use('/api', authRoutes);
 app.use('/api/maverick', maverickRoutes);
 app.use('/api/batch', batchRoutes);
+app.use('/api/quiz', quizRoutes);
+app.use('/api', authRoutes);
 
 // Global Error Handler (optional)
 app.use((err, req, res, next) => {
